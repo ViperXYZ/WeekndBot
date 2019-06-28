@@ -11,7 +11,8 @@
     "env": {
       "GO111MODULE": "on",
       "GOPROXY": "https://proxy.golang.org",
-      "GOSUMDB": "sum.golang.org"
+      "GOSUMDB": "sum.golang.org",
+      "SIGNING_SECRET": "@weeknd-bot-signing-secret"
     }
   }
 }
