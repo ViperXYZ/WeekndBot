@@ -18,6 +18,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 	verifier, err := slack.NewSecretsVerifier(r.Header, signingSecret)
 	if err != nil {
+		log.Printf("Could not return SecretsVerifier object: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -25,11 +26,13 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	r.Body = ioutil.NopCloser(io.TeeReader(r.Body, &verifier))
 	s, err := slack.SlashCommandParse(r)
 	if err != nil {
+		log.Printf("Could not parse slash command: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	if err = verifier.Ensure(); err != nil {
+		log.Printf("Could not verify secret: %v", err)
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
@@ -39,6 +42,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		params := &slack.Msg{Text: s.Text}
 		b, err := json.Marshal(params)
 		if err != nil {
+			log.Printf("Could not marshal json: %v", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
