@@ -6,5 +6,12 @@
       "src": "index.go",
       "use": "@now/go"
     }
-  ]
+  ],
+  "build": {
+    "env": {
+      "GO111MODULE": "on",
+      "GOPROXY": "https://proxy.golang.org",
+      "GOSUMDB": "sum.golang.org"
+    }
+  }
 }

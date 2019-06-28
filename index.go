@@ -10,7 +10,7 @@ type testStruct struct {
 	Test string
 }
 
-func process(w http.ResponseWriter, r *http.Request) {
+func Handler(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 	var t testStruct
 	err := decoder.Decode(&t)
